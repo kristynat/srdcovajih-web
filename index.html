@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>srdcOVA JIH — Komunální volby 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ① ALERT PÁSEK ─────────────────────────────────── -->
+  <div class="alert-bar" role="note" aria-live="polite">
+    <span class="alert-bar__text">Komunální volby&emsp;6.–7. října</span>
+  </div>
+
+  <!-- ② HERO ────────────────────────────────────────── -->
+  <section class="hero" aria-label="Hlavní banner">
+
+    <!-- Vrstva 0: Stín — fullscreen, za vším -->
+    <img class="photo-shadow" src="assets/images/shadow.png" alt="">
+
+    <!-- Vrstva 1: Grid — logo + logo strany + karta -->
+    <div class="hero__logo">
+      <img src="assets/logos/logo-srdcova-jih-blue.svg" alt="srdcOVA JIH">
+    </div>
+
+    <div class="hero__party-logo">
+      <img src="assets/logos/logo-srdcova-jih.svg" alt="Koalice ODS, Lidovci a nestraníci">
+    </div>
+
+    <div class="hero__card">
+      <div class="card">
+        <h1 class="card__heading">
+          Pro Jih, který má&nbsp;<span class="card__heading-serif"><span class="word-rotate" aria-live="polite">srdc</span></span><span class="card__heading-ova">OVA</span>
+        </h1>
+        <p class="card__body">
+          <span class="rev-line">SrdcOVA na Jihu s&nbsp;týmem Radima Ivana. Město,</span><br>
+          <span class="rev-line">které slouží občanovi. Místo výmluv hledáme řešení</span><br>
+          <span class="rev-line">a posouváme Jih dopředu.</span>
+        </p>
+        <a href="#zapojit-se" class="card__btn">
+          <svg class="btn__stroke" aria-hidden="true" focusable="false">
+            <rect class="btn__stroke-rect" width="100%" height="100%" rx="999"/>
+          </svg>
+          <span class="btn__track" aria-hidden="true">
+            <span>Zapojit se</span>
+            <span>Zapojit se</span>
+          </span>
+          <span class="sr-only">Zapojit se</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Vrstva 2: Wrapper kandidáta (drží místo v gridu) -->
+    <div class="hero-photo">
+      <!-- Měkký glow stín za postavou -->
+      <div class="hero-photo__glow" aria-hidden="true"></div>
+      <!-- Fotka kandidáta nad stínem -->
+      <img class="hero-photo__img" src="assets/images/kandidat.png" alt="Radim Ivan, kandidát na starostu">
+      <!-- Jméno a pozice -->
+      <div class="hero-photo__label">
+        <span class="hero-photo__name">Radim Ivan</span>
+        <span class="hero-photo__role">kandidát na starostu Ostravy-Jih</span>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    /* ── Page load reveal — stagger delays ── */
+    (function () {
+      // Tělo textu — každý řádek s postupným zpožděním
+      document.querySelectorAll('.rev-line').forEach(function (el, i) {
+        el.style.setProperty('--delay', (0.5 + i * 0.12) + 's');
+      });
+
+      // Button — přijede po posledním řádku textu
+      var lineCount = document.querySelectorAll('.rev-line').length;
+      var btnDelay  = 0.5 + lineCount * 0.12 + 0.15;
+      var btn = document.querySelector('.card__btn');
+      if (btn) btn.style.setProperty('--btn-delay', btnDelay + 's');
+    })();
+
+    /* ── Button – SVG stroke: přesné rozměry přes JS ── */
+    (function () {
+      const btn  = document.querySelector('.card__btn');
+      const svg  = btn  && btn.querySelector('.btn__stroke');
+      const rect = svg  && svg.querySelector('.btn__stroke-rect');
+      if (!btn || !svg || !rect) return;
+
+      function updateStroke() {
+        const w  = btn.offsetWidth;
+        const h  = btn.offsetHeight;
+        const sw = 1;          // stroke-width v px
+        const half = sw / 2;   // inset = půl tloušťky, aby linka zůstala uvnitř
+
+        // SVG viewport = přesné rozměry buttonu
+        svg.setAttribute('width',  w);
+        svg.setAttribute('height', h);
+
+        // Rect insetovaný o half — stroke se tak nevykreslí za hranu buttonu
+        const rw = w - sw;
+        const rh = h - sw;
+        rect.setAttribute('x',      half);
+        rect.setAttribute('y',      half);
+        rect.setAttribute('width',  rw);
+        rect.setAttribute('height', rh);
+        rect.setAttribute('rx',     rh / 2);   // skutečný pill radius
+
+        // Přesný obvod insetovaného pillu
+        const perimeter = 2 * (rw - rh) + Math.PI * rh;
+        btn.style.setProperty('--btn-perimeter', perimeter.toFixed(2));
+      }
+
+      updateStroke();
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(updateStroke).observe(btn);
+      }
+    })();
+
+    /* ── Button – sound effect na hover ── */
+    (function () {
+      const btn = document.querySelector('.card__btn');
+      if (!btn) return;
+      const sound = new Audio('assets/sound-effect/dragon-studio-notification-sound-372474.mp3');
+      sound.volume = 0.35;
+      btn.addEventListener('mouseenter', function () {
+        sound.currentTime = 0;
+        sound.play().catch(function () {});
+      });
+    })();
+
+    /* ── Alert bar – rotace zpráv každých 6 s ── */
+    (function () {
+      const messages = [
+        'Komunální volby 6.–7. října',
+        'Kalendář akcí najdete na srdcova-jih.cz',
+        'Setkání s Radimem Ivanem — 15. září 18:00, náměstí Jihu',
+        'Volební program ke stažení na webu',
+        'Zapojte se do kampaně → dobrovolníci vítáni',
+      ];
+      let idx = 0;
+      const el = document.querySelector('.alert-bar__text');
+      if (!el) return;
+
+      setInterval(function () {
+        el.style.opacity = '0';
+        setTimeout(function () {
+          idx = (idx + 1) % messages.length;
+          el.textContent = messages[idx];
+          el.style.opacity = '1';
+        }, 320);
+      }, 6000);
+    })();
+
+    /* ── Nadpis – rotace prefixu srdcOVA ── */
+    (function () {
+      const words = ['srdc', 'ocel', 'osud', 'příběh'];
+      let current = 0;
+      const el = document.querySelector('.word-rotate');
+      if (!el) return;
+
+      setInterval(function () {
+        // fade out + slide nahoru
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-7px)';
+
+        setTimeout(function () {
+          current = (current + 1) % words.length;
+          el.textContent = words[current];
+
+          // snap pod výchozí pozici (bez transition)
+          el.style.transition = 'none';
+          el.style.transform = 'translateY(7px)';
+
+          requestAnimationFrame(function () {
+            el.style.transition = '';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          });
+        }, 230);
+      }, 2800);
+    })();
+
+    /* ── Rotace kandidátů každé 4 s ── */
+    (function () {
+      const candidates = [
+        {
+          img:  'assets/images/kandidat.png',
+          name: 'Radim Ivan',
+          role: 'kandidát na starostu Ostravy-Jih'
+        },
+        {
+          img:  'assets/images/kandidat-2.png',
+          name: 'Michaela Klimšová',
+          role: 'kandidátka MO Ostrava-Jih'
+        },
+        {
+          img:  'assets/images/kandidat-2-1.png',
+          name: 'Hana Pátková',
+          role: 'kandidátka MO Ostrava-Jih'
+        }
+      ];
+
+      // Předem načíst fotky
+      candidates.forEach(function (c) {
+        var i = new Image(); i.src = c.img;
+      });
+
+      var current = 0;
+      var imgEl  = document.querySelector('.hero-photo__img');
+      var nameEl = document.querySelector('.hero-photo__name');
+      var roleEl = document.querySelector('.hero-photo__role');
+      if (!imgEl || !nameEl || !roleEl) return;
+
+      setInterval(function () {
+        current = (current + 1) % candidates.length;
+        var c = candidates[current];
+
+        // Fade out
+        imgEl.style.opacity  = '0';
+        nameEl.style.opacity = '0';
+        roleEl.style.opacity = '0';
+
+        setTimeout(function () {
+          imgEl.src         = c.img;
+          nameEl.textContent = c.name;
+          roleEl.textContent = c.role;
+
+          // Fade in
+          imgEl.style.opacity  = '1';
+          nameEl.style.opacity = '1';
+          roleEl.style.opacity = '1';
+        }, 400);
+      }, 4000);
+    })();
+  </script>
+</body>
+</html>

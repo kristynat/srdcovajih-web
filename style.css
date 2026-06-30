@@ -1,0 +1,563 @@
+/* =====================================================
+   DESIGN TOKENY
+   ===================================================== */
+:root {
+  --bg:         #ECE7E1;
+  --blue:       #3E47CD;
+  --coral:      #F26B47;
+
+  --font-sans:  'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Layout helpers */
+  --hero-pad:   clamp(1.5rem, 4vw, 3.5rem);
+  --card-pad:   clamp(1.5rem, 3vw, 2.75rem);
+  --gap:        clamp(1rem, 3vw, 2rem);
+}
+
+/* =====================================================
+   RESET
+   ===================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  font-family: var(--font-sans);
+  color: var(--blue);
+  /* Alert bar + hero vyplní celé okno */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =====================================================
+   REVEAL ANIMACE — page load
+   ===================================================== */
+@keyframes anim-drop {
+  from { opacity: 0; transform: translateY(-22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes anim-heading {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes anim-text-line {
+  from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
+  to   { opacity: 1; filter: blur(0px); transform: translateY(0); }
+}
+
+@keyframes anim-btn-rise {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Loga shora */
+.hero__logo {
+  animation: anim-drop 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+}
+.hero__party-logo {
+  animation: anim-drop 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+/* Nadpis */
+.card__heading {
+  animation: anim-heading 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* Řádky těla textu — delay nastaví JS */
+.rev-line {
+  display: inline;
+  animation: anim-text-line 0.65s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0.5s) both;
+}
+
+/* Button — přijíždí jako poslední */
+.card__btn {
+  animation: anim-btn-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--btn-delay, 0.9s) both;
+}
+
+/* Respektovat prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero__logo,
+  .hero__party-logo,
+  .card__heading,
+  .rev-line,
+  .card__btn,
+  .photo-shadow {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* =====================================================
+   ALERT PÁSEK
+   ===================================================== */
+.alert-bar {
+  background: var(--coral);
+  color: var(--bg);
+  padding: 0 1rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+}
+
+.alert-bar__text {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1.4vw, 0.8125rem);
+  letter-spacing: 0.07em;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* =====================================================
+   HERO — CSS GRID (2 × 2)
+   ===================================================== */
+/*
+  Desktop:
+    ┌─────────────┬─────────────┐
+    │  logo       │  party-logo │
+    │             │             │
+    │  card       │  photo      │
+    └─────────────┴─────────────┘
+*/
+.hero {
+  flex: 1;
+  width: 100%;
+  max-width: 1700px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "logo   party-logo"
+    "card   photo";
+  padding: var(--hero-pad);
+  gap: var(--gap);
+  background: var(--bg);
+  position: relative;
+  overflow: visible;
+  min-height: clamp(480px, 72vh, 860px);
+}
+
+/* Dekorativní stín listů — full-bleed k pravému okraji viewportu */
+.photo-shadow {
+  position: absolute;
+  top: -8%;
+  right: calc(50% - 50vw);
+  width: 100vw;
+  height: 116%;
+  object-fit: cover;
+  object-position: right top;
+  opacity: 0.45;
+  transform-origin: 60% 30%;
+  animation: shadow-sway 14s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;   /* vlastní GPU vrstva — animace neovlivní sousedy */
+}
+
+@keyframes shadow-sway {
+  0%, 100% { transform: rotate(0deg)    scale(1);    }
+  35%       { transform: rotate(3.5deg)  scale(1.02); }
+  70%       { transform: rotate(-2.5deg) scale(0.99); }
+}
+
+/* Grid prvky nad dekorativním stínem */
+.hero__logo,
+.hero__party-logo,
+.hero__card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Karta musí být nejvýš — zakrývá foto na mobilu */
+.hero__card {
+  z-index: 3;
+}
+
+/* =====================================================
+   LOGO — vlevo nahoře
+   ===================================================== */
+.hero__logo {
+  grid-area: logo;
+  align-self: start;
+}
+
+.hero__logo img {
+  height: clamp(2.5rem, 4vw, 3.5rem);
+  width: auto;
+}
+
+/* =====================================================
+   LOGO STRANY — vpravo nahoře (v gridu)
+   ===================================================== */
+.hero__party-logo {
+  grid-area: party-logo;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.hero__party-logo img {
+  height: clamp(3.25rem, 5.2vw, 4.55rem);
+  width: auto;
+}
+
+/* =====================================================
+   MODRÁ KARTA — vlevo dole
+   ===================================================== */
+.hero__card {
+  grid-area: card;
+  align-self: end;
+}
+
+.card {
+  background: var(--blue);
+  color: var(--bg);
+  padding: var(--card-pad);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 520px;
+}
+
+.card__label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(0.6875rem, 1vw, 0.8125rem);
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
+
+.card__heading {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  line-height: 1.15;
+  color: var(--bg);
+}
+
+/* „srdc" prefix — Playfair Display */
+.card__heading-serif {
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+
+/* „OVA" — Inter 700, kapitálky */
+.card__heading-ova {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.word-rotate {
+  display: inline-block;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.card__body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(0.875rem, 1.3vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--bg);
+  opacity: 0.88;
+}
+
+/* BUTTON — pill, var(--coral) pozadí, var(--bg) text, Playfair */
+.card__btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: var(--coral);
+  color: var(--bg);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.25rem;
+  height: 60px;
+  padding: 0 2.25rem;
+  border-radius: 999px;
+  position: relative;
+  text-decoration: none;
+  transition:
+    background 0.3s ease,
+    color      0.3s ease;
+}
+
+.card__btn:hover {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.card__btn:focus-visible {
+  outline: 3px solid var(--bg);
+  outline-offset: 3px;
+}
+
+/* SVG stroke — kreslí se dokola při hoveru */
+.btn__stroke {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.btn__stroke-rect {
+  fill: none;
+  stroke: var(--bg);
+  stroke-width: 1;
+  stroke-dasharray:  var(--btn-perimeter, 0);
+  stroke-dashoffset: var(--btn-perimeter, 0);
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.card__btn:hover .btn__stroke-rect {
+  stroke-dashoffset: 0;
+}
+
+/* Slide efekt — dvojitý text, posun nahoru při hoveru */
+.card__btn {
+  overflow: hidden;
+}
+
+.btn__track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.btn__track span {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.card__btn:hover .btn__track {
+  transform: translateY(-60px);
+}
+
+/* Přístupný skrytý text pro screen readery */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =====================================================
+   PHOTO WRAPPER — wrapper v gridu, shadow + foto uvnitř
+   ===================================================== */
+.hero-photo {
+  grid-area: photo;
+  position: relative;
+  overflow: visible;   /* glow může přetéct do stran */
+  z-index: 2;
+  isolation: isolate;  /* vlastní stacking context — shadow-sway ho neovlivní */
+  align-self: stretch; /* wrapper roztáhne až k dolnímu okraji hero */
+}
+
+/* Fade overlay — spodní část foto splyne s pozadím */
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(
+    to bottom,
+    rgba(236, 231, 225, 0)   0%,
+    rgba(236, 231, 225, 0.7) 60%,
+    rgba(236, 231, 225, 1)   100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Měkký CSS glow — za postavou, uvnitř wrapperu */
+.hero-photo__glow {
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  top: 10%;
+  bottom: 0;
+  background: radial-gradient(ellipse at center,
+    rgba(60, 60, 60, 0.32) 0%,
+    rgba(60, 60, 60, 0) 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fotka kandidáta nad glowem */
+.hero-photo__img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  max-width: none;   /* přebít globální img { max-width: 100% } — jinak se foto deformuje */
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.hero-photo__name,
+.hero-photo__role {
+  transition: opacity 0.4s ease;
+}
+
+/* Jméno a pozice kandidáta — vpravo, cca 1/3 výšky */
+.hero-photo__label {
+  position: absolute;
+  top: 35%;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: right;
+  z-index: 3;  /* nad fade overlayem (::after = 2) */
+}
+
+.hero-photo__name {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1.3;
+}
+
+.hero-photo__role {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--blue);
+  opacity: 0.65;
+  line-height: 1.3;
+}
+
+/* =====================================================
+   RESPONZIVITA
+   ===================================================== */
+
+/*
+  Tablet ≤ 900px:
+    ┌──────────┬──────────┐
+    │  logo    │party-logo│
+    ├──────────┴──────────┤
+    │       photo         │
+    ├─────────────────────┤
+    │        card         │
+    └─────────────────────┘
+*/
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "logo  party-logo"
+      ".     ."
+      "card  card";
+    min-height: 100svh;
+    min-height: 100vh;
+    padding-bottom: 0;
+  }
+
+  /* Stín nepulzuje na mobilu + glow bez blur */
+  .photo-shadow {
+    animation: none;
+    will-change: auto;
+  }
+
+  .hero-photo__glow {
+    filter: none;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  /* Foto vypadne z gridu — absolutně přes celý hero, edge-to-edge */
+  .hero-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: auto;
+    isolation: isolate;
+  }
+
+  .hero-photo__img {
+    height: 100%;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Label — vpravo, pod menu, zalomit na dva řádky */
+  .hero-photo__label {
+    top: clamp(5.5rem, 18vw, 8rem);
+    right: 1.25rem;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    max-width: clamp(100px, 30vw, 150px);
+  }
+
+  /* Karta — padding od spodního okraje telefonu */
+  .card {
+    padding-bottom: calc(var(--card-pad) + env(safe-area-inset-bottom, 0.75rem));
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 1.25rem 1.25rem 0;
+    gap: 1rem;
+  }
+
+  .card__btn {
+    align-self: stretch;
+    text-align: center;
+  }
+}
