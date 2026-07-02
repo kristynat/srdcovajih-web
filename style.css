@@ -118,12 +118,12 @@ img {
 .alert-bar {
   background: var(--coral);
   color: var(--bg);
-  padding: 0 1rem;
+  padding: 0.35rem 1rem;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.5rem;
+  min-height: 2rem;
 }
 
 .alert-bar__text {
@@ -294,6 +294,17 @@ img {
   line-height: 1.7;
   color: var(--bg);
   opacity: 0.88;
+}
+
+/* Ruční zalomení jen na širších screenech; na mobilu přirozené zalomení */
+.br-desktop {
+  display: none;
+}
+
+@media (min-width: 601px) {
+  .br-desktop {
+    display: inline;
+  }
 }
 
 /* BUTTON — pill, var(--coral) pozadí, var(--bg) text, Playfair */
@@ -555,19 +566,30 @@ img {
 }
 
 @media (max-width: 600px) {
+  /* Zrušit velké min-height z tabletu — flex:1 + body 100svh řídí výšku.
+     Alert + hero = přesně 100svh, vše se vejde bez scrollu. */
   .hero {
-    padding: 1.25rem 1.25rem 0;
-    gap: 1rem;
+    min-height: auto;
+    padding: 1.25rem 1.25rem 1.5rem;   /* spodní padding — box dýchá */
+    gap: 0.75rem;
   }
 
-  /* Menší postava, víc vzduchu kolem */
+  /* Foto v prostřední flexibilní části, nedosahuje ke kartě */
   .hero-photo {
-    padding-top: 8%;
+    top: 0;
+    bottom: auto;
+    height: 62%;              /* flexibilní horní část, zbytek pro box */
+    padding-top: 6%;
   }
 
   .hero-photo__img {
-    max-height: 80%;
-    max-width: 62%;
+    max-height: 100%;         /* vztaženo k menšímu wrapperu (62 % hero) */
+    max-width: 58%;
+  }
+
+  /* Fade overlay níž, ať navazuje na menší foto */
+  .hero-photo::after {
+    height: 40%;
   }
 
   .card__btn {
@@ -576,10 +598,14 @@ img {
   }
 }
 
-/* Velmi malé displeje ≤ 380px */
+/* Velmi malé displeje ≤ 380px — ještě víc místa pro box */
 @media (max-width: 380px) {
+  .hero-photo {
+    height: 56%;
+  }
+
   .hero-photo__img {
-    max-height: 76%;
-    max-width: 70%;
+    max-height: 100%;
+    max-width: 54%;
   }
 }
