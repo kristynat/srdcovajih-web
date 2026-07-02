@@ -16,6 +16,14 @@
     <span class="alert-bar__text">Komunální volby&emsp;6.–7. října</span>
   </div>
 
+  <!-- STICKY MENU — objeví se při scrollu pod hero -->
+  <header class="sticky-nav" aria-label="Hlavní navigace">
+    <a class="sticky-nav__logo" href="#top" aria-label="srdcOVA JIH — zpět nahoru">
+      <img src="assets/logos/logo-srdcova-jih-blue.svg" alt="srdcOVA JIH">
+    </a>
+    <img class="sticky-nav__party" src="assets/logos/logo-srdcova-jih.svg" alt="Koalice ODS, Lidovci a nestraníci">
+  </header>
+
   <!-- ② HERO ────────────────────────────────────────── -->
   <section class="hero" aria-label="Hlavní banner">
 
@@ -34,7 +42,7 @@
     <div class="hero__card">
       <div class="card">
         <h1 class="card__heading">
-          Pro Jih, který má&nbsp;<span class="card__heading-serif"><span class="word-rotate" aria-live="polite">srdc</span></span><span class="card__heading-ova">OVA</span>
+          Jih je <span class="card__heading-serif">srdc</span><span class="card__heading-ova">OVA</span> záležitost.
         </h1>
         <p class="card__body">
           <span class="rev-line">SrdcOVA na Jihu s&nbsp;týmem Radima Ivana. Město,</span><br class="br-desktop">
@@ -69,6 +77,166 @@
 
   </section>
 
+  <!-- ③ ZAPOJTE SE — kontaktní formulář ────────────────── -->
+  <section class="signup" id="zapojit-se" aria-labelledby="signup-title">
+    <div class="signup__box">
+      <h2 class="signup__title" id="signup-title">Zapojte se</h2>
+      <p class="signup__lead">
+        Máte nápad, jak udělat Jih lepším místem pro život? Chcete se zapojit
+        do kampaně? Nebo nám prostě jen tak napsat? Vyplňte formulář a my se
+        vám ozveme zpátky.
+      </p>
+
+      <!--
+        POZOR: doplňte svůj Formspree endpoint níže.
+        Založte formulář na https://formspree.io → zkopírujte ID
+        a nahraďte  TVUJ_ENDPOINT  (např. action="https://formspree.io/f/xxxxxxx")
+      -->
+      <!--
+        NAOSTRO: odeber  novalidate  → aktivují se povinná pole (required).
+        Teď je vypnuté kvůli náhledu, ať toast naskočí i s prázdným formulářem.
+      -->
+      <form
+        class="signup__form"
+        action="https://formspree.io/f/TVUJ_ENDPOINT"
+        method="POST"
+        novalidate>
+
+        <!-- Jméno -->
+        <div class="field">
+          <label class="field__label" for="jmeno">Jméno a příjmení</label>
+          <input class="field__input" type="text" id="jmeno" name="jmeno"
+                 autocomplete="name" required>
+        </div>
+
+        <!-- E-mail + telefon vedle sebe -->
+        <div class="field-row">
+          <div class="field">
+            <label class="field__label" for="email">E-mail</label>
+            <input class="field__input" type="email" id="email" name="email"
+                   autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label class="field__label" for="telefon">Telefon (dobrovolný)</label>
+            <input class="field__input" type="tel" id="telefon" name="telefon"
+                   autocomplete="tel">
+          </div>
+        </div>
+
+        <!-- Adresa -->
+        <div class="field">
+          <label class="field__label" for="adresa">Adresa</label>
+          <input class="field__input" type="text" id="adresa" name="adresa"
+                 autocomplete="street-address">
+        </div>
+
+        <!-- Zpráva -->
+        <div class="field">
+          <label class="field__label" for="zprava">Zpráva</label>
+          <textarea class="field__input field__textarea" id="zprava"
+                    name="zprava" rows="5"></textarea>
+        </div>
+
+        <!-- Souhlas -->
+        <div class="field-consent">
+          <input class="field-consent__box" type="checkbox" id="souhlas"
+                 name="souhlas" value="ano" required>
+          <label class="field-consent__text" for="souhlas">
+            Souhlasím se zpracováním svých osobních údajů Občanskou demokratickou
+            stranou za účelem zpětného kontaktování a zapojení do volební kampaně.
+            Souhlas je dobrovolný a mohu ho kdykoli odvolat. Více v
+            <a href="zasady.html" class="field-consent__link" target="_blank" rel="noopener">Zásadách zpracování osobních údajů</a>.
+          </label>
+        </div>
+
+        <!-- Submit — stejný pill styl jako hero button -->
+        <button type="submit" class="signup__btn">
+          <svg class="btn__stroke" aria-hidden="true" focusable="false">
+            <rect class="btn__stroke-rect" width="100%" height="100%" rx="999"/>
+          </svg>
+          <span class="signup__btn-label">Zapojit se</span>
+          <span class="signup__btn-arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- SHEET — velký panel vyjede zdola po odeslání, po 5 s sám zmizí -->
+  <div class="sheet" hidden>
+    <div class="sheet__backdrop"></div>
+    <div class="sheet__panel" role="status" aria-live="polite">
+      <span class="sheet__grabber" aria-hidden="true"></span>
+      <button type="button" class="sheet__close" aria-label="Zavřít">×</button>
+
+      <span class="sheet__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+      </span>
+      <h3 class="sheet__title">Děkujeme!</h3>
+      <p class="sheet__text">
+        Vaše zpráva byla odeslána. Ozveme se vám zpátky co nejdříve.
+      </p>
+      <button type="button" class="sheet__again">Přidat další e-mail</button>
+    </div>
+  </div>
+
+  <!-- ④ FOOTER — kontakt ─────────────────────────────── -->
+  <footer class="footer">
+
+    <!-- Střed: kontaktní osoba + velký kontakt (blízko sebe) -->
+    <div class="footer__contact">
+      <!-- Kontaktní osoba — těsně nad mailem -->
+      <div class="footer__person">
+        <span class="footer__avatar">
+          <!-- Fotku doplní Kristýna; zatím prázdný placeholder -->
+          <img src="" alt="" aria-hidden="true">
+        </span>
+        <span class="footer__person-text">
+          <span class="footer__person-small">Volejte nebo pište</span>
+          <span class="footer__person-name">Radim Ivan, manažer</span>
+        </span>
+      </div>
+
+      <!-- POZOR: placeholdery — Kristýna doplní reálné hodnoty -->
+      <a class="footer__email" href="mailto:PLACEHOLDER@gmail.com">PLACEHOLDER@gmail.com</a>
+      <a class="footer__phone" href="tel:+420111111111">111 111 111</a>
+
+      <!-- Instagram -->
+      <a class="footer__social" href="https://www.instagram.com/" target="_blank"
+         rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        <span class="footer__social-text">Sledujte nás na Instagramu</span>
+      </a>
+    </div>
+
+    <!-- Spodní lišta -->
+    <div class="footer__bottom">
+      <p class="footer__legal footer__legal--left">
+        Zadavatel / zpracovatel: ODS · KDU-ČSL (Lidovci)
+      </p>
+
+      <div class="footer__logos">
+        <!-- Bílá varianta srdcOVA JIH chybí → placeholder přes CSS filtr -->
+        <img class="footer__logo footer__logo--white" src="assets/logos/logo-srdcova-jih-blue.svg" alt="srdcOVA JIH">
+        <!-- Logo koalice v původních barvách — na tmavším pozadí je vidět -->
+        <img class="footer__logo" src="assets/logos/logo-srdcova-jih.svg" alt="Koalice ODS, Lidovci a nestraníci">
+      </div>
+
+      <p class="footer__legal footer__legal--right">
+        srdcova-jih.cz · Komunální volby 2026
+      </p>
+    </div>
+
+  </footer>
+
   <script>
     /* ── Page load reveal — stagger delays ── */
     (function () {
@@ -84,41 +252,130 @@
       if (btn) btn.style.setProperty('--btn-delay', btnDelay + 's');
     })();
 
-    /* ── Button – SVG stroke: přesné rozměry přes JS ── */
+    /* ── Buttony – SVG stroke: přesné rozměry přes JS ── */
     (function () {
-      const btn  = document.querySelector('.card__btn');
-      const svg  = btn  && btn.querySelector('.btn__stroke');
-      const rect = svg  && svg.querySelector('.btn__stroke-rect');
-      if (!btn || !svg || !rect) return;
+      // Oba buttony se stroke efektem (hero i formulář)
+      const buttons = document.querySelectorAll('.card__btn, .signup__btn');
 
-      function updateStroke() {
-        const w  = btn.offsetWidth;
-        const h  = btn.offsetHeight;
-        const sw = 1;          // stroke-width v px
-        const half = sw / 2;   // inset = půl tloušťky, aby linka zůstala uvnitř
+      buttons.forEach(function (btn) {
+        const svg  = btn.querySelector('.btn__stroke');
+        const rect = svg && svg.querySelector('.btn__stroke-rect');
+        if (!svg || !rect) return;
 
-        // SVG viewport = přesné rozměry buttonu
-        svg.setAttribute('width',  w);
-        svg.setAttribute('height', h);
+        function updateStroke() {
+          const w  = btn.offsetWidth;
+          const h  = btn.offsetHeight;
+          const sw = 1;          // stroke-width v px
+          const half = sw / 2;   // inset = půl tloušťky, aby linka zůstala uvnitř
 
-        // Rect insetovaný o half — stroke se tak nevykreslí za hranu buttonu
-        const rw = w - sw;
-        const rh = h - sw;
-        rect.setAttribute('x',      half);
-        rect.setAttribute('y',      half);
-        rect.setAttribute('width',  rw);
-        rect.setAttribute('height', rh);
-        rect.setAttribute('rx',     rh / 2);   // skutečný pill radius
+          // SVG viewport = přesné rozměry buttonu
+          svg.setAttribute('width',  w);
+          svg.setAttribute('height', h);
 
-        // Přesný obvod insetovaného pillu
-        const perimeter = 2 * (rw - rh) + Math.PI * rh;
-        btn.style.setProperty('--btn-perimeter', perimeter.toFixed(2));
+          // Rect insetovaný o half — stroke se tak nevykreslí za hranu buttonu
+          const rw = w - sw;
+          const rh = h - sw;
+          rect.setAttribute('x',      half);
+          rect.setAttribute('y',      half);
+          rect.setAttribute('width',  rw);
+          rect.setAttribute('height', rh);
+          rect.setAttribute('rx',     rh / 2);   // skutečný pill radius
+
+          // Přesný obvod insetovaného pillu
+          const perimeter = 2 * (rw - rh) + Math.PI * rh;
+          btn.style.setProperty('--btn-perimeter', perimeter.toFixed(2));
+        }
+
+        updateStroke();
+        if (typeof ResizeObserver !== 'undefined') {
+          new ResizeObserver(updateStroke).observe(btn);
+        }
+      });
+    })();
+
+    /* ── Formulář – odeslání přes Formspree (AJAX) + bottom sheet ── */
+    (function () {
+      const form  = document.querySelector('.signup__form');
+      const sheet = document.querySelector('.sheet');
+      if (!form || !sheet) return;
+
+      const againBtn  = sheet.querySelector('.sheet__again');
+      const closeBtn  = sheet.querySelector('.sheet__close');
+      const backdrop  = sheet.querySelector('.sheet__backdrop');
+      let hideTimer = null;
+
+      function showSheet() {
+        sheet.hidden = false;
+        // vynutit reflow, aby se spustila slide-up animace
+        void sheet.offsetWidth;
+        sheet.classList.add('is-visible');
+
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(hideSheet, 5000);   // po 5 s sám zmizí
       }
 
-      updateStroke();
-      if (typeof ResizeObserver !== 'undefined') {
-        new ResizeObserver(updateStroke).observe(btn);
+      function hideSheet() {
+        clearTimeout(hideTimer);
+        sheet.classList.remove('is-visible');
+        // schovat z toku až po doběhnutí animace
+        setTimeout(function () { sheet.hidden = true; }, 500);
       }
+
+      function submitSuccess() {
+        form.reset();     // formulář zůstává, ale prázdný pro další zprávu
+        showSheet();
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Placeholder endpoint → ukázat sheet rovnou (náhled)
+        if (form.action.indexOf('TVUJ_ENDPOINT') !== -1) {
+          submitSuccess();
+          return;
+        }
+
+        const btn = form.querySelector('.signup__btn');
+        if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        })
+        .then(function (res) {
+          if (res.ok) {
+            submitSuccess();
+          } else {
+            throw new Error('Odeslání selhalo');
+          }
+        })
+        .catch(function () {
+          alert('Něco se pokazilo. Zkuste to prosím znovu, nebo nás kontaktujte přímo.');
+        })
+        .finally(function () {
+          if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+        });
+      });
+
+      // "Přidat další e-mail" → zavřít sheet, skočit na první pole formuláře
+      if (againBtn) {
+        againBtn.addEventListener('click', function () {
+          hideSheet();
+          const first = form.querySelector('input, textarea');
+          if (first) {
+            form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            first.focus({ preventScroll: true });
+          }
+        });
+      }
+
+      // Zavřít křížkem, klikem na pozadí, klávesou Esc
+      if (closeBtn) closeBtn.addEventListener('click', hideSheet);
+      if (backdrop) backdrop.addEventListener('click', hideSheet);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !sheet.hidden) hideSheet();
+      });
     })();
 
     /* ── Button – sound effect na hover ── */
@@ -154,35 +411,6 @@
           el.style.opacity = '1';
         }, 320);
       }, 6000);
-    })();
-
-    /* ── Nadpis – rotace prefixu srdcOVA ── */
-    (function () {
-      const words = ['srdc', 'ocel', 'osud', 'příběh'];
-      let current = 0;
-      const el = document.querySelector('.word-rotate');
-      if (!el) return;
-
-      setInterval(function () {
-        // fade out + slide nahoru
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(-7px)';
-
-        setTimeout(function () {
-          current = (current + 1) % words.length;
-          el.textContent = words[current];
-
-          // snap pod výchozí pozici (bez transition)
-          el.style.transition = 'none';
-          el.style.transform = 'translateY(7px)';
-
-          requestAnimationFrame(function () {
-            el.style.transition = '';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-          });
-        }, 230);
-      }, 2800);
     })();
 
     /* ── Rotace kandidátů každé 4 s ── */
@@ -236,6 +464,80 @@
           roleEl.style.opacity = '1';
         }, 400);
       }, 4000);
+    })();
+
+    /* ── Footer – reveal e-mailu a telefonu znak po znaku ── */
+    (function () {
+      const footer  = document.querySelector('.footer');
+      const targets = document.querySelectorAll('.footer__email, .footer__phone');
+      if (!footer || !targets.length) return;
+
+      // Rozdělit text každého odkazu na znaky (href zůstává zachovaný)
+      let globalIndex = 0;
+      targets.forEach(function (el) {
+        const text = el.textContent;
+        el.textContent = '';
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = text[i];
+          // Postupné zpoždění napříč oběma řádky
+          span.style.setProperty('--char-delay', (globalIndex * 0.035) + 's');
+          globalIndex++;
+          el.appendChild(span);
+        }
+      });
+
+      // Spustit reveal, až footer vjede do viewportu
+      if (typeof IntersectionObserver === 'undefined') {
+        footer.classList.add('is-revealed');
+        return;
+      }
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            footer.classList.add('is-revealed');
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.35 });
+      observer.observe(footer);
+    })();
+
+    /* ── Sticky menu – objeví se při scrollu pod hero ── */
+    (function () {
+      const nav  = document.querySelector('.sticky-nav');
+      const hero = document.querySelector('.hero');
+      if (!nav || !hero) return;
+
+      let ticking = false;
+      function update() {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        // Menu naskočí, jakmile spodek hero vyjede nad polovinu obrazovky
+        if (heroBottom < window.innerHeight * 0.5) {
+          nav.classList.add('is-visible');
+        } else {
+          nav.classList.remove('is-visible');
+        }
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }, { passive: true });
+      update();
+
+      // Klik na logo → plynule nahoru
+      const logo = nav.querySelector('.sticky-nav__logo');
+      if (logo) {
+        logo.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
     })();
   </script>
 </body>
