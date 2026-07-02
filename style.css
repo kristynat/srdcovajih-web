@@ -427,15 +427,18 @@ img {
   z-index: 0;
 }
 
-/* Fotka kandidáta nad glowem */
+/* Fotka kandidáta nad glowem — bottom-anchored, nad hlavou vždy vzduch */
 .hero-photo__img {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 100%;
+  height: auto;
+  max-height: 88%;   /* desktop: ~12 % slotu zůstane nad hlavou */
   width: auto;
-  max-width: none;   /* přebít globální img { max-width: 100% } — jinak se foto deformuje */
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
   pointer-events: none;
   z-index: 1;
   transition: opacity 0.4s ease;
@@ -528,8 +531,9 @@ img {
   }
 
   .hero-photo__img {
-    height: 100%;
-    width: auto;
+    height: auto;
+    max-height: 82%;
+    max-width: 70%;   /* ať fotka nezabírá celou šířku */
     left: 50%;
     transform: translateX(-50%);
   }
@@ -556,8 +560,26 @@ img {
     gap: 1rem;
   }
 
+  /* Menší postava, víc vzduchu kolem */
+  .hero-photo {
+    padding-top: 8%;
+  }
+
+  .hero-photo__img {
+    max-height: 80%;
+    max-width: 62%;
+  }
+
   .card__btn {
     align-self: stretch;
     text-align: center;
+  }
+}
+
+/* Velmi malé displeje ≤ 380px */
+@media (max-width: 380px) {
+  .hero-photo__img {
+    max-height: 76%;
+    max-width: 70%;
   }
 }
