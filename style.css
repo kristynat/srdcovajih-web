@@ -216,7 +216,9 @@ img {
   background: var(--bg);
   position: relative;
   overflow: visible;
-  min-height: clamp(480px, 72vh, 860px);
+  /* Hero vždy vyplní obrazovku (minus alert pásek) — formulář až na scroll */
+  min-height: calc(100vh - 2rem);
+  min-height: calc(100svh - 2rem);
 }
 
 /* Dekorativní stín listů — full-bleed k pravému okraji viewportu.
@@ -499,7 +501,7 @@ img {
   left: 50%;
   transform: translateX(-50%);
   height: auto;
-  max-height: 88%;   /* desktop: ~12 % slotu zůstane nad hlavou */
+  max-height: 94%;   /* desktop: větší fotka, ~6 % slotu nad hlavou */
   width: auto;
   max-width: 100%;
   object-fit: contain;
