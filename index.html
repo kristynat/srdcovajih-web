@@ -11,6 +11,17 @@
 </head>
 <body>
 
+  <!-- ⓪ PRELOADER — modrá plocha, bílé logo, serif načítání -->
+  <div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Načítání stránky">
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="assets/logos/logo-srdcova-jih-blue.svg" alt="srdcOVA JIH">
+      <div class="preloader__loading">
+        <span class="preloader__label">Načítání</span>
+        <span class="preloader__bar"><span class="preloader__bar-fill"></span></span>
+      </div>
+    </div>
+  </div>
+
   <!-- ① ALERT PÁSEK ─────────────────────────────────── -->
   <div class="alert-bar" role="note" aria-live="polite">
     <span class="alert-bar__text">Komunální volby&emsp;6.–7. října</span>
@@ -238,6 +249,34 @@
   </footer>
 
   <script>
+    /* ── Preloader — schová se po načtení (min. doba + pojistka) ── */
+    (function () {
+      var pre = document.getElementById('preloader');
+      if (!pre) return;
+      var start = Date.now();
+      var MIN = 900;    // ať to neproblikne na rychlém načtení
+      var MAX = 4000;   // pojistka — nikdy nezůstat viset
+      var done = false;
+
+      function hide() {
+        if (done) return;
+        done = true;
+        pre.classList.add('is-hidden');
+        setTimeout(function () {
+          if (pre && pre.parentNode) pre.parentNode.removeChild(pre);
+        }, 650);
+      }
+
+      function finish() {
+        var elapsed = Date.now() - start;
+        setTimeout(hide, Math.max(0, MIN - elapsed));
+      }
+
+      if (document.readyState === 'complete') finish();
+      else window.addEventListener('load', finish);
+      setTimeout(hide, MAX);
+    })();
+
     /* ── Page load reveal — stagger delays ── */
     (function () {
       // Tělo textu — každý řádek s postupným zpožděním
