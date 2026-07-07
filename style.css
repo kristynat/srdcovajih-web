@@ -1024,8 +1024,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 84px;
-  height: 84px;
+  width: 59px;
+  height: 59px;
   border-radius: 50%;
   background: var(--coral);
   color: var(--bg);
@@ -1034,8 +1034,8 @@ img {
 }
 
 .sheet__icon svg {
-  width: 44px;
-  height: 44px;
+  width: 31px;
+  height: 31px;
 }
 
 @keyframes sheet-pop {
@@ -1139,6 +1139,125 @@ img {
 
   .field-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   INSTAGRAM — carousel posledních postů
+   ===================================================== */
+.insta {
+  background: var(--bg);
+  /* Horizontální odsazení na sekci — spolehlivé i pro scroll kontejner */
+  padding: clamp(2.5rem, 6vw, 5rem) var(--hero-pad);
+}
+
+/* Desktop — grid 4 sloupců, vyplní šířku obsahu (zarovnané na 1700px grid) */
+.insta__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  max-width: 1700px;
+  margin-inline: auto;
+}
+
+.insta__track::-webkit-scrollbar {
+  display: none;           /* WebKit (pro mobilní carousel) */
+}
+
+/* Společné rozměry dlaždic — čtverec, ostré rohy */
+.insta__cta,
+.insta__post {
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* 1. blok — tmavě modrá výzva */
+.insta__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  background: var(--blue);
+  color: var(--bg);
+  transition: background 0.25s ease;
+}
+
+.insta__cta:hover {
+  background: #2931A2;
+}
+
+.insta__cta-icon {
+  width: 34px;
+  height: 34px;
+  margin-bottom: auto;   /* ikona nahoře, text dole */
+}
+
+.insta__cta-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.2;
+}
+
+.insta__cta-handle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  opacity: 0.75;
+}
+
+/* Post — placeholder / obrázek */
+.insta__post {
+  position: relative;
+  display: block;
+  background: #DED7CE;   /* placeholder pozadí, dokud není obrázek */
+}
+
+.insta__post img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.insta__post:hover img {
+  transform: scale(1.05);
+}
+
+/* Behold embed — zabírá zbytek gridu vedle CTA bloku (sloupce 2–4) */
+.insta__embed {
+  grid-column: 2 / -1;
+  min-width: 0;
+}
+
+/* Mobil — carousel (vodorovný scroll místo gridu) */
+@media (max-width: 600px) {
+  .insta__track {
+    display: flex;
+    grid-template-columns: none;
+    gap: 0.75rem;
+    max-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .insta__cta,
+  .insta__post {
+    flex: 0 0 auto;
+    width: clamp(220px, 72vw, 280px);
+    scroll-snap-align: start;
+  }
+
+  .insta__embed {
+    grid-column: auto;
+    flex: 0 0 auto;
+    width: clamp(220px, 72vw, 280px);
   }
 }
 

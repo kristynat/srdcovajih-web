@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
+  <!-- Instagram embed (Behold) — po aktivaci feedu odkomentuj: -->
+  <!-- <script type="module" src="https://w.behold.so/widget.js"></script> -->
 </head>
 <body>
 
@@ -16,7 +18,6 @@
     <div class="preloader__inner">
       <img class="preloader__logo" src="assets/logos/logo-srdcova-jih-blue.svg" alt="srdcOVA JIH">
       <div class="preloader__loading">
-        <span class="preloader__label">Načítání</span>
         <span class="preloader__bar"><span class="preloader__bar-fill"></span></span>
       </div>
     </div>
@@ -194,7 +195,59 @@
     </div>
   </div>
 
-  <!-- ④ FOOTER — kontakt ─────────────────────────────── -->
+  <!-- ④ INSTAGRAM — poslední posty ─────────────────────── -->
+  <!--
+    ══ AUTO-EMBED (auto-aktualizace postů z @srdcova_jih) ══
+    Doporučená služba: BEHOLD  (https://behold.so) — free tier, moderní, rychlé.
+    Aktivace (jednorázově):
+      1) Založ účet na behold.so a připoj Instagram @srdcova_jih
+      2) Vytvoř „feed", nastav počet postů = 3 a layout na 1 řádek
+      3) Zkopíruj své Feed ID
+      4) V <head> (index.html) odkomentuj řádek se scriptem widget.js
+      5) Níže odkomentuj <behold-widget…> a vlož své FEED_ID
+      6) Smaž blok placeholder dlaždic (.insta__post) pod tím
+
+    Alternativy: SnapWidget (iframe, taky free), Elfsight, EmbedSocial.
+    Dokud embed není aktivní, zobrazují se placeholder dlaždice.
+  -->
+  <section class="insta" aria-label="Instagram srdcOVA JIH">
+    <div class="insta__track">
+
+      <!-- 1. blok — tmavě modrá výzva ke sledování -->
+      <a class="insta__cta" href="https://www.instagram.com/srdcova_jih/"
+         target="_blank" rel="noopener noreferrer">
+        <svg class="insta__cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        <span class="insta__cta-title">Sledujte nás na Instagramu</span>
+        <span class="insta__cta-handle">@srdcova_jih</span>
+      </a>
+
+      <!-- ══ SEM přijde Behold embed (po aktivaci odkomentuj + vlož FEED_ID) ══
+      <behold-widget feed-id="VLOZ_FEED_ID" class="insta__embed"></behold-widget>
+      -->
+
+      <!-- Posty — fotky z assets/carousel/ (odkaz vede na profil) -->
+      <a class="insta__post" href="https://www.instagram.com/srdcova_jih/"
+         target="_blank" rel="noopener noreferrer" aria-label="Příspěvek na Instagramu">
+        <img src="assets/carousel/carousel1.JPG" alt="" loading="lazy">
+      </a>
+      <a class="insta__post" href="https://www.instagram.com/srdcova_jih/"
+         target="_blank" rel="noopener noreferrer" aria-label="Příspěvek na Instagramu">
+        <img src="assets/carousel/carpousel2.JPG" alt="" loading="lazy">
+      </a>
+      <a class="insta__post" href="https://www.instagram.com/srdcova_jih/"
+         target="_blank" rel="noopener noreferrer" aria-label="Příspěvek na Instagramu">
+        <img src="assets/carousel/carousel3.png" alt="" loading="lazy">
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ⑤ FOOTER — kontakt ─────────────────────────────── -->
   <footer class="footer">
 
     <!-- Střed: kontaktní osoba + velký kontakt (blízko sebe) -->
@@ -202,21 +255,19 @@
       <!-- Kontaktní osoba — těsně nad mailem -->
       <div class="footer__person">
         <span class="footer__avatar">
-          <!-- Fotku doplní Kristýna; zatím prázdný placeholder -->
-          <img src="" alt="" aria-hidden="true">
+          <img src="assets/people/lukas.png" alt="Lukáš Kojecký">
         </span>
         <span class="footer__person-text">
           <span class="footer__person-small">Volejte nebo pište</span>
-          <span class="footer__person-name">Radim Ivan, manažer</span>
+          <span class="footer__person-name">Lukáš Kojecký, manažer</span>
         </span>
       </div>
 
-      <!-- POZOR: placeholdery — Kristýna doplní reálné hodnoty -->
-      <a class="footer__email" href="mailto:PLACEHOLDER@gmail.com">PLACEHOLDER@gmail.com</a>
-      <a class="footer__phone" href="tel:+420111111111">111 111 111</a>
+      <a class="footer__email" href="mailto:marketing.kojecky@gmail.com">marketing.kojecky@gmail.com</a>
+      <a class="footer__phone" href="tel:+420773488132">+420 773 488 132</a>
 
       <!-- Instagram -->
-      <a class="footer__social" href="https://www.instagram.com/" target="_blank"
+      <a class="footer__social" href="https://www.instagram.com/srdcova_jih/" target="_blank"
          rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -466,9 +517,9 @@
           role: 'kandidátka MO Ostrava-Jih'
         },
         {
-          img:  'assets/images/kandidat-2-1.png',
-          name: 'Hana Pátková',
-          role: 'kandidátka MO Ostrava-Jih'
+          img:  'assets/kandidat-simon.png',
+          name: 'Šimon Uruba',
+          role: 'kandidát MO Ostrava-Jih'
         }
       ];
 
@@ -543,17 +594,24 @@
       observer.observe(footer);
     })();
 
-    /* ── Sticky menu – objeví se při scrollu pod hero ── */
+    /* ── Sticky menu – objeví se při scrollu pod hero, schová se u footeru ── */
     (function () {
-      const nav  = document.querySelector('.sticky-nav');
-      const hero = document.querySelector('.hero');
+      const nav    = document.querySelector('.sticky-nav');
+      const hero   = document.querySelector('.hero');
+      const footer = document.querySelector('.footer');
       if (!nav || !hero) return;
 
       let ticking = false;
       function update() {
         const heroBottom = hero.getBoundingClientRect().bottom;
         // Menu naskočí, jakmile spodek hero vyjede nad polovinu obrazovky
-        if (heroBottom < window.innerHeight * 0.5) {
+        const pastHero = heroBottom < window.innerHeight * 0.5;
+        // …a schová se, jakmile footer dojede do horní poloviny obrazovky
+        const footerReached = footer
+          ? footer.getBoundingClientRect().top < window.innerHeight * 0.5
+          : false;
+
+        if (pastHero && !footerReached) {
           nav.classList.add('is-visible');
         } else {
           nav.classList.remove('is-visible');
