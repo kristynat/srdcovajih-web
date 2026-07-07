@@ -729,7 +729,7 @@ img {
   }
 
   .hero-photo__img {
-    max-height: 86%;   /* výška řídí velikost — obličej výš, nad kartou */
+    max-height: 92%;   /* výš — vidět víc z fotky (bottom-anchored) */
     max-width: none;   /* neomezovat šířkou, jinak foto zůstane malé */
     width: auto;
   }
@@ -743,7 +743,7 @@ img {
 /* Velmi malé displeje ≤ 380px */
 @media (max-width: 380px) {
   .hero-photo__img {
-    max-height: 82%;
+    max-height: 88%;
   }
 }
 
