@@ -396,6 +396,10 @@ img {
   flex-direction: column;
   gap: 1.25rem;
   max-width: 520px;
+  /* Vlastní GPU vrstva — box se při scrollu nepřekresluje (žádný jitter
+     pod proskleným sticky menu) */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .card__label {
@@ -732,6 +736,7 @@ img {
     max-height: 92%;   /* výš — vidět víc z fotky (bottom-anchored) */
     max-width: none;   /* neomezovat šířkou, jinak foto zůstane malé */
     width: auto;
+    bottom: 12%;       /* zvednout postavu nad modrý box (víc než jen hlava) */
   }
 
   .card__btn {
@@ -744,6 +749,7 @@ img {
 @media (max-width: 380px) {
   .hero-photo__img {
     max-height: 88%;
+    bottom: 10%;
   }
 }
 
@@ -1234,30 +1240,24 @@ img {
   min-width: 0;
 }
 
-/* Mobil — carousel (vodorovný scroll místo gridu) */
+/* Mobil — mřížka 2×2 (2 dlaždice na řádek, bez scrollování) */
 @media (max-width: 600px) {
   .insta__track {
-    display: flex;
-    grid-template-columns: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
     max-width: none;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    overflow: visible;
   }
 
   .insta__cta,
   .insta__post {
-    flex: 0 0 auto;
-    width: clamp(220px, 72vw, 280px);
-    scroll-snap-align: start;
+    width: auto;   /* šířku řídí grid */
   }
 
+  /* Behold embed (po aktivaci) přes oba sloupce */
   .insta__embed {
-    grid-column: auto;
-    flex: 0 0 auto;
-    width: clamp(220px, 72vw, 280px);
+    grid-column: 1 / -1;
   }
 }
 
@@ -1495,6 +1495,13 @@ img {
 
   .footer__logos {
     order: -1;   /* loga nahoře nad legal texty */
+  }
+
+  /* E-mail vždy na jeden řádek — velikost dopočítaná z šířky obrazovky */
+  .footer__email {
+    white-space: nowrap;
+    word-break: normal;
+    font-size: calc((100vw - 2.5rem) / 16);
   }
 }
 
